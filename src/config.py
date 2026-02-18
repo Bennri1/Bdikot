@@ -37,9 +37,9 @@ CHROMA_PERSIST_DIR: str = str(Path(__file__).resolve().parent.parent / "chroma_d
 EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
 
 # ---------------------------------------------------------------------------
-# LLM -- uses OpenAI-compatible API (works with OpenAI, Azure, local, etc.)
+# LLM -- uses Anthropic Claude API
 # ---------------------------------------------------------------------------
-LLM_MODEL: str = "gpt-4o-mini"   # or "gpt-4o", "gpt-3.5-turbo", etc.
+LLM_MODEL: str = "claude-sonnet-4-5-20250929"  # or "claude-opus-4-6", "claude-haiku-4-5-20251001"
 LLM_TEMPERATURE: float = 0.2
 
 # ---------------------------------------------------------------------------

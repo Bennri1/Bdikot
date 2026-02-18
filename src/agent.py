@@ -16,7 +16,7 @@ from typing import List, Tuple
 
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
-from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 
 from src.config import LLM_MODEL, LLM_TEMPERATURE, MAX_HISTORY_TURNS, TOP_K
 from src.vector_store import load_index, retrieve
@@ -68,7 +68,7 @@ class ConversationalRAGAgent:
     """Stateful conversational agent backed by a vector store."""
 
     vector_store: Chroma | None = None
-    llm: ChatOpenAI | None = None
+    llm: ChatAnthropic | None = None
     history: List[Tuple[str, str]] = field(default_factory=list)
     top_k: int = TOP_K
     max_history: int = MAX_HISTORY_TURNS
@@ -77,7 +77,7 @@ class ConversationalRAGAgent:
         if self.vector_store is None:
             self.vector_store = load_index()
         if self.llm is None:
-            self.llm = ChatOpenAI(
+            self.llm = ChatAnthropic(
                 model=LLM_MODEL,
                 temperature=LLM_TEMPERATURE,
             )
