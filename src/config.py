@@ -17,8 +17,8 @@ load_dotenv()
 # ---------------------------------------------------------------------------
 # Document source -- CHANGE THESE to switch document bases
 # ---------------------------------------------------------------------------
-PDF_DIRECTORY: str = r"C:\Users\binya\Desktop\CME295"
-COLLECTION_NAME: str = "cme295_docs"
+PDF_DIRECTORY: str = r"C:\Users\binya\Desktop\Articles_features"
+COLLECTION_NAME: str = "article_docs"
 
 # ---------------------------------------------------------------------------
 # Chunking parameters
@@ -40,7 +40,8 @@ EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
 # LLM -- uses Anthropic Claude API
 # ---------------------------------------------------------------------------
 LLM_MODEL: str = "claude-sonnet-4-5-20250929"  # or "claude-opus-4-6", "claude-haiku-4-5-20251001"
-LLM_TEMPERATURE: float = 0.2
+LLM_TEMPERATURE: float = 1.0  # must be 1.0 when thinking is enabled
+THINKING_BUDGET_TOKENS: int = 5000
 
 # ---------------------------------------------------------------------------
 # Retrieval

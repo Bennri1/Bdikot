@@ -18,7 +18,7 @@ from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from langchain_anthropic import ChatAnthropic
 
-from src.config import LLM_MODEL, LLM_TEMPERATURE, MAX_HISTORY_TURNS, TOP_K
+from src.config import LLM_MODEL, LLM_TEMPERATURE, MAX_HISTORY_TURNS, THINKING_BUDGET_TOKENS, TOP_K
 from src.vector_store import load_index, retrieve
 
 logger = logging.getLogger(__name__)
@@ -80,6 +80,7 @@ class ConversationalRAGAgent:
             self.llm = ChatAnthropic(
                 model=LLM_MODEL,
                 temperature=LLM_TEMPERATURE,
+                thinking={"type": "enabled", "budget_tokens": THINKING_BUDGET_TOKENS},
             )
 
     # ----- helpers --------------------------------------------------------
@@ -102,7 +103,7 @@ class ConversationalRAGAgent:
             question=question,
         )
         response = self.llm.invoke(prompt)
-        condensed = response.content.strip()
+        condensed = next(b.text for b in response.content if b.type == "text").strip()
         logger.debug("Condensed question: %s", condensed)
         return condensed
 
@@ -136,7 +137,7 @@ class ConversationalRAGAgent:
 
         # 4. Generate answer
         response = self.llm.invoke(messages)
-        answer = response.content.strip()
+        answer = next(b.text for b in response.content if b.type == "text").strip()
 
         # 5. Update history (sliding window)
         self.history.append((question, answer))
